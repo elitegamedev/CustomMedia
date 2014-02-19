@@ -1,0 +1,205 @@
+package org.goldcraftmc.Media;
+
+import java.util.List;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Main extends JavaPlugin {
+
+	@Override
+	public void onEnable() {
+		getLogger().info(
+				"This plugin was developed by 100persent from EliteGameDev");
+		saveDefaultConfig();
+	}
+
+	@Override
+	public void onDisable() {
+		getLogger().info(
+				"This plugin was developed by 100persent from EliteGameDev");
+		saveDefaultConfig();
+	}
+
+	@Override
+	public boolean onCommand(CommandSender sender, Command command,
+			String label, String[] args) {
+		Player player = (Player) sender;
+		List<String> twitch = getConfig().getStringList("twitchUsers");
+		List<String> youtubers = getConfig().getStringList("youtubeUsers");
+		if (sender instanceof Player) {
+			if (label.equalsIgnoreCase("media")) {
+				if (args.length == 0) {
+					player.sendMessage(ChatColor.RED
+							+ "Please type: '/media help'");
+				} else if (args.length == 1) {
+					if (args[0].equalsIgnoreCase("help")) {
+						player.sendMessage(ChatColor.GOLD + "Media Help");
+						player.sendMessage(ChatColor.GRAY + "/media help: "
+								+ ChatColor.BOLD + "Displays this message.");
+						player.sendMessage(ChatColor.GRAY
+								+ "/media twitch or /twitch: "
+								+ ChatColor.BOLD
+								+ "Shows the users that are registered with Twitch.");
+						player.sendMessage(ChatColor.GRAY
+								+ "/media twitch add <name> or /twitch add <name>: "
+								+ ChatColor.BOLD
+								+ "Adds a user to the Twitch list.");
+						player.sendMessage(ChatColor.GRAY
+								+ "/media youtube or /youtube: "
+								+ ChatColor.BOLD
+								+ "Shows the users that are registered with YouTube.");
+						player.sendMessage(ChatColor.GRAY
+								+ "/media youtube add <name> or /youtube add <name>"
+								+ ChatColor.BOLD
+								+ "Adds someone to the YouTubers.");
+					} else if (args[0].equalsIgnoreCase("twitch")) {
+						for (String s : twitch) {
+							player.sendMessage(ChatColor.GRAY + ""
+									+ ChatColor.BOLD + s);
+						}
+						/*
+						 * Do not use this. Use that ^^
+						 * player.sendMessage(getConfig().getStringList(args));
+						 */
+					} else if (args[0].equalsIgnoreCase("youtube")) {
+						for (String s : youtubers) {
+							player.sendMessage(ChatColor.GRAY + ""
+									+ ChatColor.BOLD + s);
+						}
+					}
+				} else if (args.length == 2) {
+					if (args[0].equalsIgnoreCase("youtube")) {
+						if (args[1].equalsIgnoreCase("add")) {
+							player.sendMessage(ChatColor.RED
+									+ "Usage: /media youtube add <name>");
+						} else {
+							player.sendMessage(ChatColor.RED
+									+ "Usage: /media youtube [add <name>]");
+						}
+					} else if (args[0].equalsIgnoreCase("twitch")) {
+						if (args[1].equalsIgnoreCase("add")) {
+							player.sendMessage(ChatColor.RED
+									+ "Usage: /media twitch add <name>");
+						} else {
+							player.sendMessage(ChatColor.RED
+									+ "Usage: /media twitch [add <name>]");
+
+						}
+					} else {
+						player.sendMessage(ChatColor.RED
+								+ "Please type: '/media help'");
+					}
+				} else if (args.length == 3) {
+					if (args[0].equalsIgnoreCase("youtube")) {
+						if (args[1].equalsIgnoreCase("add")) {
+							youtubers.add(args[2]);
+							getConfig().set("youtubeUsers", youtubers);
+							saveConfig();
+							player.sendMessage(ChatColor.GREEN
+									+ "The user "
+									+ args[2]
+									+ " has been added to the list of YouTubers.");
+						} else {
+							player.sendMessage(ChatColor.RED
+									+ "Please type: '/media help'");
+						}
+					} else if (args[0].equalsIgnoreCase("twitch")) {
+						if (args[1].equalsIgnoreCase("add")) {
+							twitch.add(args[2]);
+							getConfig().set("twitchUsers", twitch);
+							saveConfig();
+							player.sendMessage(ChatColor.GREEN
+									+ "The user "
+									+ args[2]
+									+ " has been added to the list of Twitch users.");
+						}
+					} else {
+
+					}
+				}
+			} else if (label.equalsIgnoreCase("twitch")) {
+				if (args.length == 0) {
+					player.sendMessage(ChatColor.GOLD
+							+ "These are the Twitch users:");
+					for (String s : twitch) {
+						player.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD
+								+ s);
+					}
+				} else if (args.length == 1) {
+					if (args[0].equalsIgnoreCase("add")) {
+						player.sendMessage(ChatColor.RED
+								+ "Usage: /twitch add <name>");
+					} else if (args[0].equalsIgnoreCase("streaming")) {
+						if (player.hasPermission("media.streamer")) {
+							player.sendMessage(ChatColor.RED + "Usage: /twitch streaming <twitchUsername>");
+						} else {
+							player.sendMessage(ChatColor.RED + "You do not have permission for this command");
+						}
+					}
+				} else if (args.length == 2) {
+					if (args[0].equalsIgnoreCase("add")) {
+						twitch.add(args[1]);
+						getConfig().set("twitchUsers", twitch);
+						saveConfig();
+						player.sendMessage(ChatColor.GREEN
+								+ "The user "
+								+ args[1]
+								+ " has been added to the list of Twitch users.");
+					} else if (args[0].equalsIgnoreCase("streaming")) {
+						if (player.hasPermission("media.streamer")) {
+							if (!(args[1] == null)) {
+								String twitchURL = "http://twitch.tv/";
+								Player you = (Player) player;
+								Bukkit.getServer()
+										.broadcastMessage(
+												ChatColor.GOLD
+														+ "The user "
+														+ you.getName()
+														+ " is now streaming! Check it out at "
+														+ twitchURL + args[1]);
+								/* 
+								int lvl = 30;
+								player.setLevel(player.getLevel() + lvl);
+								*/
+							}
+						}
+					} /*
+					 * else if(args.length == 3) {
+					 * if(args[0].equalsIgnoreCase("add")) {
+					 * twitchWN.add(args[1] + args[2]);
+					 * getConfig().set("twitchUsersWN", twitchWN); }
+					 */
+				}
+			} else if (label.equalsIgnoreCase("youtube")) {
+				if (args.length == 0) {
+					for (String s : youtubers) {
+						player.sendMessage(ChatColor.GRAY + "" + ChatColor.BOLD
+								+ s);
+					}
+				} else if (args.length == 1) {
+					if (args[0].equalsIgnoreCase("add")) {
+						player.sendMessage(ChatColor.RED
+								+ "Usage: /youtube add <name>");
+					}
+				} else if (args.length == 2) {
+					if (args[0].equalsIgnoreCase("add")) {
+						youtubers.add(args[1]);
+						getConfig().set("youtubeUsers", youtubers);
+						saveConfig();
+						player.sendMessage(ChatColor.GREEN + "The user "
+								+ args[1]
+								+ " has been added to the list of YouTubers.");
+					}
+				} else {
+					player.sendMessage(ChatColor.RED
+							+ "Usage: /youtube [add <name>]");
+				}
+			}
+		}
+		return true;
+	}
+}

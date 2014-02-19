@@ -1,0 +1,12 @@
+name: CustomMedia
+version: 1.0
+main: org.goldcraftmc.Media.Main
+author: 100persent
+website: goldcraftmc.org
+commands:
+    media: 
+        description: Main media command
+    twitch: 
+        description: Twitch command
+    youtube: 
+        description: YouTube command
