@@ -38,34 +38,28 @@ public class Main extends JavaPlugin {
 				} else if (args.length == 1) {
 					if (args[0].equalsIgnoreCase("help")) {
 						player.sendMessage(ChatColor.GOLD + "Media Help");
-						player.sendMessage(ChatColor.GOLD + "/media help: "
-								+ ChatColor.GREEN + "Displays this message.");
-						player.sendMessage(ChatColor.GOLD
+						player.sendMessage(ChatColor.GRAY + "/media help: "
+								+ ChatColor.BOLD + "Displays this message.");
+						player.sendMessage(ChatColor.GRAY
 								+ "/media twitch or /twitch: "
-								+ ChatColor.GREEN
+								+ ChatColor.BOLD
 								+ "Shows the users that are registered with Twitch.");
-						player.sendMessage(ChatColor.GOLD
+						player.sendMessage(ChatColor.GRAY
 								+ "/media twitch add <name> or /twitch add <name>: "
-								+ ChatColor.GREEN
+								+ ChatColor.BOLD
 								+ "Adds a user to the Twitch list.");
-						player.sendMessage(ChatColor.GOLD
-								+ "/twitch streaming <username>: "
-								+ ChatColor.GREEN
-								+ "Broadcasts a message saying you are streaming");
-						player.sendMessage(ChatColor.GOLD
+						player.sendMessage(ChatColor.GRAY + "/twitch streaming <username>: " + ChatColor.BOLD + "Broadcasts a message saying you are streaming");
+						player.sendMessage(ChatColor.GRAY
 								+ "/media youtube or /youtube: "
-								+ ChatColor.GREEN
+								+ ChatColor.BOLD
 								+ "Shows the users that are registered with YouTube.");
-						player.sendMessage(ChatColor.GOLD
+						player.sendMessage(ChatColor.GRAY
 								+ "/media youtube add <name> or /youtube add <name>"
-								+ ChatColor.GREEN
+								+ ChatColor.BOLD
 								+ "Adds someone to the YouTubers.");
-						player.sendMessage(ChatColor.GOLD + "/request: "
-								+ ChatColor.GREEN
-								+ "Asks OPs to add you to the list of Medias");
 					} else if (args[0].equalsIgnoreCase("twitch")) {
 						for (String s : twitch) {
-							player.sendMessage(ChatColor.GOLD + ""
+							player.sendMessage(ChatColor.GRAY + ""
 									+ ChatColor.BOLD + s);
 						}
 						/*
@@ -74,8 +68,7 @@ public class Main extends JavaPlugin {
 						 */
 					} else if (args[0].equalsIgnoreCase("youtube")) {
 						for (String s : youtubers) {
-							player.sendMessage(ChatColor.GOLD + ""
-									+ ChatColor.BOLD + s);
+							player.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + s);
 						}
 					}
 				} else if (args.length == 2) {
@@ -176,8 +169,7 @@ public class Main extends JavaPlugin {
 								 */
 							}
 						} else {
-							player.sendMessage(ChatColor.RED
-									+ "You do not have permission to use this command.");
+							player.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
 						}
 					} /*
 					 * else if(args.length == 3) {
@@ -211,18 +203,6 @@ public class Main extends JavaPlugin {
 				} else {
 					player.sendMessage(ChatColor.RED
 							+ "Usage: /youtube [add <name>]");
-				}
-			} else if (label.equalsIgnoreCase("request")) {
-				Player requester = (Player) sender;
-				if (sender instanceof Player) {
-					for (Player ops : Bukkit.getServer().getOnlinePlayers()) {
-						if (ops.isOp()) {
-							ops.sendMessage(ChatColor.GREEN
-									+ "The user "
-									+ requester.getName()
-									+ " is requesting to be a part of the Media.");
-						}
-					}
 				}
 			}
 		}

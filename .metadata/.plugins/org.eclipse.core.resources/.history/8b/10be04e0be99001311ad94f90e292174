@@ -10,5 +10,3 @@ commands:
         description: Twitch command
     youtube: 
         description: YouTube command
-    request:
-        description: Request Media (UPDATE SOON)
